@@ -1,0 +1,70 @@
+Задание: 1 
+Найдите номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 дол. Вывести: model, speed и hd
+SELECT model, speed, hd 
+FROM PC
+WHERE price < 500
+
+Задание: 2 
+Найдите производителей принтеров. Вывести: maker
+SELECT maker
+FROM Product
+WHERE type = 'Printer' GROUP BY maker
+
+Задание: 3
+SELECT model,ram,screen 
+FROM Laptop 
+WHERE price > 1000
+
+Задание: 4
+Найдите все записи таблицы Printer для цветных принтеров
+SELECT DISTINCT code, model, color, type, price
+FROM Printer
+WHERE color='y'
+
+Задание: 5
+Найдите номер модели, скорость и размер жесткого диска ПК, имеющих 12x или 24x CD и цену менее 600 дол.
+SELECT PC.model,PC.speed, PC.hd 
+FROM PC
+WHERE (cd = '12x' OR cd = '24x') AND price < 600
+
+Задание: 6
+Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не менее 10 Гбайт, найти скорости таких ПК-блокнотов. Вывод: производитель, скорость
+SELECT DISTINCT product.maker, laptop.speed
+FROM product INNER JOIN laptop
+ON product.model=laptop.model
+WHERE laptop.hd>=10
+
+Задание: 7
+Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква)
+SELECT DISTINCT product.model, pc.price
+FROM Product JOIN pc ON product.model = pc.model WHERE maker = 'B'
+UNION
+SELECT DISTINCT product.model, printer.price
+FROM product JOIN printer ON product.model=printer.model WHERE maker='B'
+UNION
+SELECT DISTINCT product.model, laptop.price
+FROM product JOIN laptop ON product.model=laptop.model WHERE maker='B'
+
+Задание: 8
+Найдите производителя, выпускающего ПК, но не ПК-блокноты
+SELECT DISTINCT Product.Maker
+FROM Product
+WHERE type ='PC'
+EXCEPT
+SELECT DISTINCT Product.maker
+FROM Product
+Where type ='Laptop'
+
+Задание: 9
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+SELECT  DISTINCT Product.maker
+FROM PC
+INNER JOIN Product ON PC.model = Product.model
+WHERE speed >=450
+
+Задание: 10
+Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+SELECT model, price
+FROM PRINTER
+WHERE price = (SELECT MAX(price) 
+FROM PRINTER)
